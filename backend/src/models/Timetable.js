@@ -19,10 +19,10 @@ const Timetable = sequelize.define('Timetable', {
     type: DataTypes.TIME,
     allowNull: false,
   },
-  // Foreign keys
-  courseId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: { model: 'Courses', key: 'id' },
-  },
 });
+
+Timetable.associate = (models) => {
+  Timetable.belongsTo(models.Course, { foreignKey: 'courseId' });
+};
+
+module.exports = Timetable;

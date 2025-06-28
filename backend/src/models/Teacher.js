@@ -14,15 +14,15 @@ const Teacher = sequelize.define('Teacher', {
   specialization: {
     type: DataTypes.STRING,
   },
-  // Foreign key for User model
   userId: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    references: {
-      model: 'Users',
-      key: 'id',
-    },
   },
 });
+
+Teacher.associate = (models) => {
+  Teacher.belongsTo(models.User, { foreignKey: 'userId' });
+  Teacher.hasMany(models.Course, { foreignKey: 'teacherId' });
+};
 
 module.exports = Teacher;

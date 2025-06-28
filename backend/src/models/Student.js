@@ -11,15 +11,18 @@ const Student = sequelize.define('Student', {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
   },
-  // Foreign key for User model
   userId: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    references: {
-      model: 'Users',
-      key: 'id',
-    },
   },
 });
+
+Student.associate = (models) => {
+  Student.belongsTo(models.User, { foreignKey: 'userId' });
+  Student.belongsToMany(models.Course, { through: 'Enrollment' });
+  Student.belongsToMany(models.User, { through: 'ParentStudent', as: 'Parents', foreignKey: 'studentId' });
+  Student.hasMany(models.Attendance, { foreignKey: 'studentId' });
+  Student.hasMany(models.Grade, { foreignKey: 'studentId' });
+};
 
 module.exports = Student;

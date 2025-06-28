@@ -12,9 +12,7 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
-    validate: {
-      isEmail: true,
-    },
+    validate: { isEmail: true },
   },
   password: {
     type: DataTypes.STRING,
@@ -43,6 +41,13 @@ User.beforeCreate(async (user) => {
 
 User.prototype.isValidPassword = async function (password) {
   return await bcrypt.compare(password, this.password);
+};
+
+// Define associations in a static method to prevent circular dependencies
+User.associate = (models) => {
+  User.hasOne(models.Student, { foreignKey: 'userId', onDelete: 'CASCADE' });
+  User.hasOne(models.Teacher, { foreignKey: 'userId', onDelete: 'CASCADE' });
+  User.belongsToMany(models.Student, { through: 'ParentStudent', as: 'Children', foreignKey: 'parentId' });
 };
 
 module.exports = User;

@@ -1,63 +1,35 @@
-const User = require('./User');
-const Student = require('./Student');
-const Teacher = require('./Teacher');
-const Course = require('./Course');
-const Attendance = require('./Attendance');
-const Grade = require('./Grade');
-const Timetable = require('./Timetable');
+'use strict';
 
-// User -> Student/Teacher one-to-one
-User.hasOne(Student, { foreignKey: 'userId', onDelete: 'CASCADE' });
-Student.belongsTo(User, { foreignKey: 'userId' });
+const fs = require('fs');
+const path = require('path');
+const Sequelize = require('sequelize');
+const sequelize = require('../config/database');
+const basename = path.basename(__filename);
 
-User.hasOne(Teacher, { foreignKey: 'userId', onDelete: 'CASCADE' });
-Teacher.belongsTo(User, { foreignKey: 'userId' });
+const db = {};
 
-// Teacher -> Course one-to-many
-Teacher.hasMany(Course, { foreignKey: 'teacherId' });
-Course.belongsTo(Teacher, { foreignKey: 'teacherId' });
+// Read all files from the current directory, import them as models
+fs.readdirSync(__dirname)
+  .filter(file => {
+    return (
+      file.indexOf('.') !== 0 &&
+      file !== basename &&
+      file.slice(-3) === '.js'
+    );
+  })
+  .forEach(file => {
+    const model = require(path.join(__dirname, file));
+    db[model.name] = model;
+  });
 
-// Student <-> Course many-to-many through a join table 'Enrollments'
-const Enrollment = require('../config/database').define('Enrollment', {});
-Student.belongsToMany(Course, { through: Enrollment });
-Course.belongsToMany(Student, { through: Enrollment });
+// Call the 'associate' method on each model if it exists
+Object.keys(db).forEach(modelName => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
 
-// Student -> Attendance one-to-many
-Student.hasMany(Attendance, { foreignKey: 'studentId' });
-Attendance.belongsTo(Student, { foreignKey: 'studentId' });
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
 
-// Course -> Attendance one-to-many
-Course.hasMany(Attendance, { foreignKey: 'courseId' });
-Attendance.belongsTo(Course, { foreignKey: 'courseId' });
-
-// Student -> Grade one-to-many
-Student.hasMany(Grade, { foreignKey: 'studentId' });
-Grade.belongsTo(Student, { foreignKey: 'studentId' });
-
-// Course -> Grade one-to-many
-Course.hasMany(Grade, { foreignKey: 'courseId' });
-Grade.belongsTo(Course, { foreignKey: 'courseId' });
-
-// Course -> Timetable one-to-many
-Course.hasMany(Timetable, { foreignKey: 'courseId' });
-Timetable.belongsTo(Course, { foreignKey: 'courseId' });
-
-// Parent-Student Relationship (Many-to-Many)
-// A user with role 'parent' can be linked to multiple students
-const ParentStudent = require('../config/database').define('ParentStudent', {});
-User.belongsToMany(Student, { through: ParentStudent, as: 'Children', foreignKey: 'parentId' });
-Student.belongsToMany(User, { through: ParentStudent, as: 'Parents', foreignKey: 'studentId' });
-
-
-module.exports = {
-  User,
-  Student,
-  Teacher,
-  Course,
-  Attendance,
-  Grade,
-  Timetable,
-  Enrollment,
-  ParentStudent
-};
-
+module.exports = db;

@@ -1,10 +1,10 @@
-const sequelize = require('../config/database');
-const { User, Student, Teacher, Course, Enrollment } = require('../models');
+const db = require('../models'); // Now we get everything from the db object
+const { User, Student, Teacher, Course } = db;
 
 const seedDatabase = async () => {
   try {
     // Drop all tables and recreate them
-    await sequelize.sync({ force: true });
+    await db.sequelize.sync({ force: true });
     console.log('Database synced!');
 
     // Create Admin
@@ -62,7 +62,6 @@ const seedDatabase = async () => {
         courseName: 'Physics 101',
         courseCode: 'PHY101',
         description: 'Introduction to Physics.'
-        // No teacher assigned yet
     });
     console.log('Science course created');
 
@@ -75,8 +74,6 @@ const seedDatabase = async () => {
     console.log('Database seeded successfully!');
   } catch (error) {
     console.error('Error seeding database:', error);
-  } finally {
-    // sequelize.close(); // Don't close connection as server will use it
   }
 };
 

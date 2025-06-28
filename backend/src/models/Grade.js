@@ -14,17 +14,11 @@ const Grade = sequelize.define('Grade', {
   remarks: {
     type: DataTypes.STRING,
   },
-  // Foreign keys
-  studentId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: { model: 'Students', key: 'id' },
-  },
-  courseId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: { model: 'Courses', key: 'id' },
-  },
 });
+
+Grade.associate = (models) => {
+  Grade.belongsTo(models.Student, { foreignKey: 'studentId' });
+  Grade.belongsTo(models.Course, { foreignKey: 'courseId' });
+};
 
 module.exports = Grade;

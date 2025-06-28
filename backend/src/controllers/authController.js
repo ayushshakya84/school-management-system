@@ -30,7 +30,6 @@ const loginUser = async (req, res) => {
 };
 
 const getMe = async (req, res) => {
-  // req.user is populated by the 'protect' middleware
   res.status(200).json(req.user);
 };
 

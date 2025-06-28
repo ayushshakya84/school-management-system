@@ -15,17 +15,11 @@ const Attendance = sequelize.define('Attendance', {
     type: DataTypes.ENUM('present', 'absent', 'late'),
     allowNull: false,
   },
-  // Foreign keys
-  studentId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: { model: 'Students', key: 'id' },
-  },
-  courseId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: { model: 'Courses', key: 'id' },
-  },
 });
+
+Attendance.associate = (models) => {
+  Attendance.belongsTo(models.Student, { foreignKey: 'studentId' });
+  Attendance.belongsTo(models.Course, { foreignKey: 'courseId' });
+};
 
 module.exports = Attendance;

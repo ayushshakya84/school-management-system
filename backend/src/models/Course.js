@@ -20,14 +20,14 @@ const Course = sequelize.define('Course', {
   description: {
     type: DataTypes.TEXT,
   },
-  // Foreign key for Teacher model
-  teacherId: {
-    type: DataTypes.INTEGER,
-    references: {
-        model: 'Teachers',
-        key: 'id'
-    }
-  }
 });
+
+Course.associate = (models) => {
+  Course.belongsTo(models.Teacher, { foreignKey: 'teacherId' });
+  Course.belongsToMany(models.Student, { through: 'Enrollment' });
+  Course.hasMany(models.Attendance, { foreignKey: 'courseId' });
+  Course.hasMany(models.Grade, { foreignKey: 'courseId' });
+  Course.hasMany(models.Timetable, { foreignKey: 'courseId' });
+};
 
 module.exports = Course;
