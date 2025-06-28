@@ -93,7 +93,7 @@ school-management-system/
 #### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/school-management-system.git
+git clone https://github.com/ayushshakya84/school-management-system.git
 cd school-management-system
 ```
 
