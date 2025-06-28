@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '../../api';
+import api from '../api';
 
 const ManageStudents = () => {
     const [students, setStudents] = useState([]);
@@ -26,7 +26,6 @@ const ManageStudents = () => {
     return (
         <div className="container mx-auto">
             <h1 className="text-2xl font-bold mb-4">Manage Students</h1>
-            {/* Add student form can go here */}
             <div className="bg-white shadow-md rounded my-6">
                 <table className="min-w-full table-auto">
                     <thead>

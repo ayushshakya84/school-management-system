@@ -2,16 +2,16 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 
-// Corrected, flattened import paths
-import LoginPage from './pages/Login'; 
-import AdminDashboard from './pages/AdminDashboard';
-import TeacherDashboard from './pages/TeacherDashboard';
-import StudentDashboard from './pages/StudentDashboard';
-import ManageStudents from './pages/ManageStudents';
-import ManageTeachers from './pages/ManageTeachers';
+// Using all lowercase filenames for imports to prevent case-sensitivity issues.
+import LoginPage from './pages/login'; 
+import AdminDashboard from './pages/admindashboard';
+import TeacherDashboard from './pages/teacherdashboard';
+import StudentDashboard from './pages/studentdashboard';
+import ManageStudents from './pages/managestudents';
+import ManageTeachers from './pages/manageteachers';
 
-import PrivateRoute from './components/PrivateRoute';
-import Navbar from './components/Navbar';
+import PrivateRoute from './components/privateroute';
+import Navbar from './components/navbar';
 
 function App() {
   return (

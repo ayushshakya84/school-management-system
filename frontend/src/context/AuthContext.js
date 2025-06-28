@@ -33,11 +33,9 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('token', data.token);
       api.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
       setUser(data);
-      // Redirect based on role
       navigate(`/${data.role}/dashboard`);
     } catch (error) {
       console.error("Login failed:", error);
-      // You might want to throw the error to be handled in the login form component
       throw error;
     }
   };
