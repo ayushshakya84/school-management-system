@@ -3,9 +3,12 @@ FROM node:18-alpine as build
 
 WORKDIR /app
 
-COPY package.json ./
-# Use npm ci for faster, more reliable builds in CI/CD environments
-RUN npm ci
+# Copy package.json AND package-lock.json (if available)
+COPY package*.json ./
+
+# Use npm install. It's safer and will use package-lock.json if it exists,
+# or create one if it doesn't.
+RUN npm install
 
 COPY . .
 RUN npm run build
