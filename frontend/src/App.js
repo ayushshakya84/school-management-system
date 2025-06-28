@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from 'context/AuthContext';
 
-// Using absolute imports, which are configured in jsconfig.json
 import LoginPage from 'pages/LoginPage';
 import AdminDashboard from 'pages/admin/AdminDashboard';
 import TeacherDashboard from 'pages/teacher/TeacherDashboard';
@@ -23,7 +22,6 @@ function App() {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/" element={<LoginPage />} />
 
-              {/* Protected Routes using Outlet for nesting */}
               <Route element={<PrivateRoute roles={['admin']} />}>
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
                 <Route path="/admin/students" element={<ManageStudents />} />
