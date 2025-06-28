@@ -2,15 +2,16 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 
-import LoginPage from './pages/Login'; // Corrected import path
-import AdminDashboard from './pages/admin/AdminDashboard';
-import TeacherDashboard from './pages/teacher/TeacherDashboard';
-import StudentDashboard from './pages/student/StudentDashboard';
-import ManageStudents from './pages/admin/ManageStudents';
-import ManageTeachers from './pages/admin/ManageTeachers';
+// Corrected, flattened import paths
+import LoginPage from './pages/Login'; 
+import AdminDashboard from './pages/AdminDashboard';
+import TeacherDashboard from './pages/TeacherDashboard';
+import StudentDashboard from './pages/StudentDashboard';
+import ManageStudents from './pages/ManageStudents';
+import ManageTeachers from './pages/ManageTeachers';
 
-import PrivateRoute from './components/layout/PrivateRoute';
-import Navbar from './components/layout/Navbar';
+import PrivateRoute from './components/PrivateRoute';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
