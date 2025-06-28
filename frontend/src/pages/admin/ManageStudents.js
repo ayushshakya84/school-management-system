@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '../api';
+import api from 'api';
 
 const ManageStudents = () => {
     const [students, setStudents] = useState([]);
@@ -37,7 +37,7 @@ const ManageStudents = () => {
                         </tr>
                     </thead>
                     <tbody className="text-gray-600 text-sm font-light">
-                        {students.map((student) => (
+                        {students.length > 0 ? students.map((student) => (
                             <tr key={student.id} className="border-b border-gray-200 hover:bg-gray-100">
                                 <td className="py-3 px-6 text-left whitespace-nowrap">{student.id}</td>
                                 <td className="py-3 px-6 text-left">{`${student.User.firstName} ${student.User.lastName}`}</td>
@@ -49,7 +49,9 @@ const ManageStudents = () => {
                                     </div>
                                 </td>
                             </tr>
-                        ))}
+                        )) : (
+                            <tr><td colSpan="4" className="text-center py-4">No students found.</td></tr>
+                        )}
                     </tbody>
                 </table>
             </div>

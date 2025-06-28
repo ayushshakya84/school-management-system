@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from 'context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
@@ -9,9 +9,13 @@ const LoginPage = () => {
     const { login, user } = useAuth();
     const navigate = useNavigate();
 
-    if (user) {
-        navigate(`/${user.role}/dashboard`);
-    }
+    // Redirect if user is already logged in
+    useEffect(() => {
+        if (user) {
+            navigate(`/${user.role}/dashboard`);
+        }
+    }, [user, navigate]);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -28,7 +32,7 @@ const LoginPage = () => {
             <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
                 <h2 className="text-2xl font-bold text-center text-gray-900">School Portal Login</h2>
                 <form className="space-y-6" onSubmit={handleSubmit}>
-                    {error && <p className="text-red-500 text-sm">{error}</p>}
+                    {error && <p className="text-red-500 text-sm text-center">{error}</p>}
                     <div>
                         <label htmlFor="email" className="text-sm font-medium text-gray-700">Email address</label>
                         <input

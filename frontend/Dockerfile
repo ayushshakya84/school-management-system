@@ -4,9 +4,10 @@ FROM node:18-alpine as build
 WORKDIR /app
 
 COPY package.json ./
-RUN npm install
+# Use npm ci for faster, more reliable builds in CI/CD environments
+RUN npm ci
 
-COPY . ./
+COPY . .
 RUN npm run build
 
 # Stage 2: Serve the application using Nginx
