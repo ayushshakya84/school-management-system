@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from 'context/AuthContext';
 
@@ -12,10 +12,12 @@ import ManageTeachers from 'pages/admin/ManageTeachers';
 import PrivateRoute from 'components/layout/PrivateRoute';
 import Navbar from 'components/layout/Navbar';
 
+// This is the correct component hierarchy.
+// Router must be the top-level parent.
 function App() {
   return (
-    <AuthProvider>
-      <Router>
+    <Router>
+      <AuthProvider>
         <Navbar />
         <div className="container mx-auto mt-8 p-4">
             <Routes>
@@ -38,8 +40,8 @@ function App() {
 
             </Routes>
         </div>
-      </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </Router>
   );
 }
 

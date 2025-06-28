@@ -6,14 +6,14 @@ const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const { login, user } = useAuth();
+    const { login, user, loading } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (user) {
+        if (!loading && user) {
             navigate(`/${user.role}/dashboard`);
         }
-    }, [user, navigate]);
+    }, [user, loading, navigate]);
 
 
     const handleSubmit = async (e) => {
